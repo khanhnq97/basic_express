@@ -15,13 +15,13 @@ const transporter = nodemailer.createTransport({
 });
 
 // Kiểm tra kết nối
-transporter.verify(function (error, success) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Server is ready to take our messages");
-  }
-});
+// transporter.verify(function (error, success) {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log("Server is ready to take our messages");
+//   }
+// });
 
 // Hàm gửi email xác thực
 const sendVerificationEmail = async (to, token) => {
