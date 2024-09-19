@@ -1,6 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import { productsRoute } from "./routes/index.js";
+import authRoutes from "./routes/authRoutes.js";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const PORT = 3000;
@@ -11,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/products", productsRoute);
+app.use("/api/auth", authRoutes);
 
 const connectMongoDB = async () => {
   try {

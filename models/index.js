@@ -1,2 +1,3 @@
 import Product from "./product.js";
-export { Product };
+import User from "./user.js";
+export { Product, User };
