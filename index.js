@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import { productsRoute } from "./routes/index.js";
-import authRoutes from "./routes/authRoutes.js";
+import { productsRoute, authRoute } from "./routes/index.js";
+import { authenticateToken } from "./middleware/auth.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -12,10 +12,9 @@ const URI =
   "mongodb+srv://studynodejs:Abc123456@cluster0.dg8lj.mongodb.net/basic_express?retryWrites=true&w=majority&appName=Cluster0";
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
+app.use(authenticateToken);
 app.use("/api/products", productsRoute);
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoute);
 
 const connectMongoDB = async () => {
   try {

@@ -1,2 +1,3 @@
 import productsRoute from "./products.js";
-export { productsRoute };
+import authRoute from "./auth.js";
+export { productsRoute, authRoute };

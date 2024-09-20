@@ -1,2 +1,3 @@
 import productsRepository from "./products.js";
-export { productsRepository };
+import authRepository from "./auth.js";
+export { productsRepository, authRepository };

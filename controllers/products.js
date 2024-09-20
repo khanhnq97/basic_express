@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 
 const createProduct = async (req, res) => {
   try {
+    const { userId } = req.userId;
+    if (!userId) {
+      res.status(400).json({ messgae: "You must login" });
+    }
+
     const { name, quantity, price } = req.body;
     const product = await productsRepository.createProduct({
       name,

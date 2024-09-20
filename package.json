@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test spnecified\" && exit 1",
     "serve": "nodemon index.js",
-    "dev": "nodemon index.js",
-    "start": "nodemon index.js"
+    "dev": "node --inspect index.js",
+    "start": "nodemon --inspect index.js"
   },
   "keywords": [],
   "author": "",
