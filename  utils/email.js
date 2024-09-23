@@ -1,16 +1,17 @@
 import nodemailer from "nodemailer";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const transporter = nodemailer.createTransport({
   // Configure your email service here
-  service: "gmail", // Sử dụng Gmail. Bạn có thể thay đổi thành dịch vụ email khác
+  //service: "gmail", // Sử dụng Gmail. Bạn có thể thay đổi thành dịch vụ email khác
+  host: "smtp.gmail.com",
   secure: false,
-  port: 465,
+  port: 587,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
-  },
-  tls: {
-    rejectUnauthorized: false,
   },
 });
 
@@ -33,16 +34,13 @@ const sendVerificationEmail = async (to, token) => {
       html: `
         <h1>Xác thực tài khoản email của bạn</h1>
         <p>Vui lòng click vào link dưới đây để xác thực tài khoản email của bạn:</p>
-        <a href="${process.env.BASE_URL}/verify/${token}">Xác thực email</a>
+        <a href="${process.env.BASE_URL}auth/verify/${token}">Xác thực email</a>
       `,
     };
 
-    console.log(`to: ${to} - token: ${token}`);
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent: " + info.response);
     return info;
   } catch (error) {
-    console.error("Error sending email:", error);
     throw error;
   }
 };
