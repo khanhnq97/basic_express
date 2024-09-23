@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
   verificationToken: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  role: {
+    type: String,
+    default: "user",
+  },
 });
 
 userSchema.pre("save", async function (next) {

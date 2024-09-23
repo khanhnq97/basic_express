@@ -3,15 +3,14 @@ import { generateToken } from "../config/auth.js";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 
-const register = async ({ name, email, password }) => {
+const register = async ({ name, email, password, role }) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw new Error("Email already is use");
     }
-
     const verificationToken = crypto.randomBytes(20).toString("hex");
-    const user = new User({ name, email, password, verificationToken });
+    const user = new User({ name, email, password, verificationToken, role });
     return await user.save();
   } catch (error) {
     throw new Error(error.message);
