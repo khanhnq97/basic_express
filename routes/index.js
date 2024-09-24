@@ -1,3 +1,5 @@
 import productsRoute from "./products.js";
 import authRoute from "./auth.js";
-export { productsRoute, authRoute };
+import cookieRoute from "./cookie.js";
+import sessionRoute from "./session.js";
+export { productsRoute, authRoute, cookieRoute, sessionRoute };
