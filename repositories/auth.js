@@ -20,22 +20,18 @@ const register = async ({ name, email, password, role }) => {
 const login = async ({ email, password }) => {
   try {
     const user = await User.findOne({ email });
-    console.log(`password: ${password} - email:${email}`);
-    //todo: need udpate latter
-    // if (!user || !(await user.comparePassword({ password }))) {
-    //   return res.status(400).json({ message: "Invalid email or password" });
-    // }
+    if (!user || !(await user.comparePassword({ password }))) {
+      throw Error("Invalid email or password");
+    }
 
-    const isMatchPassword = await bcrypt.compare(password, user.password);
-
-    if (!user || !isMatchPassword) {
-      return res.status(400).json({ message: "Invalid email or password" });
+    if (!user.isVerified) {
+      throw Error("Please verify your email before logging in");
     }
 
     const token = generateToken(user);
     return { token: token, userId: user._id };
   } catch (error) {
-    throw new Error(error);
+    throw Error(error.message);
   }
 };
 

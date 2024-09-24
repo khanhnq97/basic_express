@@ -25,15 +25,9 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-userSchema.methods.comparePassword = async function (candidatePassword) {
+userSchema.methods.comparePassword = async function ({ password }) {
   try {
-    if (
-      typeof candidatePassword !== "String" ||
-      typeof this.password !== "String"
-    ) {
-      throw Error("Invalid password format");
-    }
-    return bcrypt.compare(candidatePassword, this.password);
+    return bcrypt.compare(password, this.password);
   } catch (error) {
     console.error("Error comparing passwords:", error);
     return false;

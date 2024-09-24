@@ -44,7 +44,7 @@ const login = async (req, res) => {
     const { token, userId } = await authRepository.login({ email, password });
     res.status(200).json({ token, userId });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
