@@ -1,6 +1,7 @@
 import { authRepository } from "../repositories/index.js";
 import emailUitl from "../ utils/email.js";
 import User from "../models/user.js";
+import HTTPCode from "../exceptions/http_code.js";
 
 const register = async (req, res) => {
   try {
@@ -14,9 +15,13 @@ const register = async (req, res) => {
 
     await emailUitl.sendVerificationEmail(email, newUser.verificationToken);
 
-    res.status(201).json(newUser);
+    res.status(HTTPCode.INSERT_OK).json({
+      message:
+        "Register user successfully. Please check your email to verify account",
+      data: newUser,
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(HTTPCode.INTERNAL_SERVER_ERROR).json({ message: error.message });
   }
 };
 

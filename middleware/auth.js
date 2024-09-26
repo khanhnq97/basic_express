@@ -1,12 +1,22 @@
 import { verifyToken } from "../config/auth.js";
 
+const needAuthToken = (url) => {
+  if (
+    url === "/auth/login".trim().toLowerCase() ||
+    url === "/auth/register".trim().toLowerCase() ||
+    url.includes("verify")
+  ) {
+    return false;
+  }
+  return true;
+};
+
 export const authenticateToken = (req, res, next) => {
   const url = req?.url?.trim()?.toLowerCase();
 
-  if (
-    url === "/auth/login".trim().toLowerCase() ||
-    url === "/auth/register".trim().toLowerCase()
-  ) {
+  console.log(`url: ${url}`);
+
+  if (!needAuthToken(url)) {
     return next();
   }
 

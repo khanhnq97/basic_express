@@ -6,10 +6,11 @@ import {
   cookieRoute,
   sessionRoute,
 } from "./routes/index.js";
-//import { authenticateToken } from "./middleware/auth.js";
+import { authenticateToken } from "./middleware/auth.js";
 import * as dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import errorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ const URI =
   "mongodb+srv://studynodejs:Abc123456@cluster0.dg8lj.mongodb.net/basic_express?retryWrites=true&w=majority&appName=Cluster0";
 
 // Cấu hình middleware session
+app.use(errorHandler);
 app.use(
   session({
     secret: process.env.SECRET_SESSION,
@@ -29,9 +31,9 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
-//app.use(authenticateToken);
+app.use(authenticateToken);
 
-app.use("/api/products", productsRoute);
+app.use("/products", productsRoute);
 app.use("/auth", authRoute);
 app.use("/cookie", cookieRoute);
 app.use("/session", sessionRoute);

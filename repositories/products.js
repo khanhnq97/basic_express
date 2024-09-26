@@ -1,4 +1,5 @@
 import { Product } from "../models/index.js";
+import AppError from "../ utils/AppError.js";
 
 const createProduct = async ({ name, quantity, price }) => {
   try {
@@ -24,16 +25,14 @@ const getProductList = async () => {
 
 const getProductById = async ({ id }) => {
   try {
-    const product = await Product.findOne(id);
+    const product = await Product.findById({ id });
     if (!product) {
-      console.log("repo: Product not found");
-      throw Error("Product not found");
+      return new AppError("Product not found", 404);
     }
-    console.log("repo product");
     return product;
   } catch (error) {
     console.log("repo error:", error);
-    throw Error(error);
+    return new AppError(error.message, error.statusCode);
   }
 };
 

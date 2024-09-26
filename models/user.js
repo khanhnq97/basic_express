@@ -1,9 +1,27 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import validator from "validator";
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  name: {
+    type: String,
+    required: true,
+    validator: {
+      validate: (value) => {
+        value.length > 3;
+      },
+      message: "Username must be at least 3 characters",
+    },
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validator: {
+      validate: (value) => validator.isEmail,
+      message: "Email is incorrect format",
+    },
+  },
   password: { type: String, required: true },
   isVerified: { type: Boolean, default: false },
   verificationToken: String,
@@ -12,6 +30,16 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     default: "user",
+  },
+  languages: {
+    type: [String],
+  },
+  gender: {
+    type: String,
+    enum: {
+      values: ["male", "female"],
+      message: "{VALUE} is not supported",
+    },
   },
 });
 
